@@ -10,11 +10,6 @@ flake: {
   inherit (lib.trivial) pipe;
   inherit (flake.packages.${pkgs.stdenv.hostPlatform.system}) zapret;
   cfg = config.services.zapret;
-  configFile = pkgs.writeTextFile {
-    name = "config";
-    text = ''
-    '';
-  };
 in {
   options.services.zapret = {
     enable = mkEnableOption ''zapret daemon'';
@@ -51,7 +46,8 @@ in {
         RemainAfterExit = "no";
         IgnoreSIGPIPE = "no";
         TimeoutSec = "30sec";
-        EnvironmentFile = "${configFile}";
+        # EnvironmentFile = "${pkgs.writeTextFile {cfg.zapretconfig}}";
+        EnvironmentFile = (pkgs.writeTextFile "zapretconfig" cfg.zapretconfig);
         ExecStart = ''
           ${zapret.out}/src/init.d/sysv/zapret start
         '';
