@@ -14,9 +14,9 @@ in {
   # options.services.zapret = {
   #   enable = mkEnableOption ''zapret daemon'';
   # };
-  options = {
-    zapret.enable = mkEnableOption ''zapret daemon'';
-  };
+  # options = {
+  #   zapret.enable = mkEnableOption ''zapret daemon'';
+  # };
 
   config = lib.mkIf cfg.enable {
     systemd.services.zapret = {
