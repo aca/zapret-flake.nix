@@ -13,29 +13,17 @@ flake: {
 in {
   options.services.zapret = {
     enable = mkEnableOption ''zapret daemon'';
-    zapretconfig = mkOption {
+    config = mkOption {
       type = types.str;
-      default = "tailscale0";
-      description = ''The interface name for tunnel traffic. Use "userspace-networking" (beta) to not use TUN.'';
+      # default = '''';
+      description = ''zapret config'';
     };
   };
-
-
-          # ${zapret.out}/src/init.d/sysv/zapret stop
-  # options = {
-  #   zapret.enable = mkEnableOption ''zapret daemon'';
-  # };
 
   config = lib.mkIf cfg.enable {
     systemd.services.zapret = {
       description = "zapret daemon";
-
-      path = with pkgs; [ nftables curl iptables ];
-
-
-      # package = zapret.overrideAttrs (old: {
-      #   config = cfg.zapretconfig;
-      # });
+      path = with pkgs; [nftables curl iptables];
 
       after = ["network-online.target"];
       wants = ["network-online.target"];
@@ -49,17 +37,15 @@ in {
         RemainAfterExit = "no";
         IgnoreSIGPIPE = "no";
         TimeoutSec = "30sec";
-        # EnvironmentFile = "${pkgs.writeTextFile {cfg.zapretconfig}}";
-        EnvironmentFile = builtins.toFile "zapretconfig" cfg.zapretconfig;
+        EnvironmentFile = builtins.toFile "zapret-config" cfg.config;
         ExecStart = ''
           ${zapret.out}/src/init.d/sysv/zapret start
         '';
         ExecStop = ''
           ${zapret.out}/src/init.d/sysv/zapret stop
         '';
-        preStart = ''
-          cat ${zapret.out}/src/config
-        '';
+        # preStart = ''
+        # '';
       };
     };
   };
