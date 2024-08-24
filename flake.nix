@@ -29,7 +29,7 @@
         version = "";
         src = zapret-src;
         buildPhase = "true";
-        config = "";
+        # config = "";
 
         # config = ''
         #   FWTYPE=iptables
@@ -66,8 +66,8 @@
         installPhase = ''
           mkdir -p $out
           cp -r --no-preserve=mode $src $out/src
-          # rm $out/src/config
-          echo "$config" > $out/src/config
+          rm $out/src/config
+          # echo "$config" > $out/src/config
           chmod -R +x $out/src
           $out/src/install_bin.sh
         '';
