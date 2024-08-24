@@ -19,6 +19,10 @@ in {
     systemd.services.zapret = {
       description = "zapret daemon";
 
+      package = zapret.overrideAttrs (old: {
+        config = ''new'';
+      });
+
       after = ["network-online.target"];
       wants = ["network-online.target"];
       wantedBy = ["multi-user.target"];
