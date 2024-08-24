@@ -69,7 +69,7 @@
           # echo "$config" > $out/src/config
           chmod -R +x $out/src
           ls $out/src
-          rm $out/src/config
+          # rm $out/src/config
           $out/src/install_bin.sh
         '';
 
