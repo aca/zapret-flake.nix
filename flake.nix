@@ -78,7 +78,7 @@
         propagatedBuildInputs = with pkgs; [
           curl
           iptables
-          nft
+          nftables
           gawk
           procps
         ];
