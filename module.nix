@@ -13,13 +13,6 @@ flake: {
 in {
   options.services.zapret = {
     enable = mkEnableOption ''zapret daemon'';
-    # config = mkOption {
-    #   type = types.str;
-    #   default = "";
-    #   description =
-    #     lib.mdDoc ''
-    #     '';
-    # };
   };
 
   config = lib.mkIf cfg.enable {
