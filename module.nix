@@ -13,6 +13,12 @@ flake: {
 in {
   options.services.zapret = {
     enable = mkEnableOption ''zapret daemon'';
+
+    zapretconfig = mkOption {
+      type = types.str;
+      default = "tailscale0";
+      description = ''The interface name for tunnel traffic. Use "userspace-networking" (beta) to not use TUN.'';
+    };
   };
   # options = {
   #   zapret.enable = mkEnableOption ''zapret daemon'';
@@ -22,9 +28,9 @@ in {
     systemd.services.zapret = {
       description = "zapret daemon";
 
-      # package = zapret.overrideAttrs (old: {
-      #   config = ''new'';
-      # });
+      package = zapret.overrideAttrs (old: {
+        config = cfg.zapretconfig;
+      });
 
       after = ["network-online.target"];
       wants = ["network-online.target"];
