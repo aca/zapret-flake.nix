@@ -14,7 +14,7 @@ flake.nix
 configuration.nix, this is working configuration in South Korea right now.
 
   services.zapret.enable = true;
-  services.zapret.zapretconfig = ''
+  services.zapret.config = ''
     FWTYPE=nftables
     SET_MAXELEM=522288
     IPSET_OPT="hashsize 262144 maxelem $SET_MAXELEM"
