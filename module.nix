@@ -13,14 +13,15 @@ flake: {
   svccfg = config.services.zapret;
   cfg = config.zapret;
 in {
-  options.services.zapret = {
-    enable = mkEnableOption ''zapret daemon'';
-
+  options.zapret = {
     zapretconfig = mkOption {
       type = types.str;
       default = "tailscale0";
       description = ''The interface name for tunnel traffic. Use "userspace-networking" (beta) to not use TUN.'';
     };
+  };
+  options.services.zapret = {
+    enable = mkEnableOption ''zapret daemon'';
   };
   # options = {
   #   zapret.enable = mkEnableOption ''zapret daemon'';
