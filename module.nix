@@ -10,30 +10,35 @@ flake: {
   inherit (lib.trivial) pipe;
   inherit (flake.packages.${pkgs.stdenv.hostPlatform.system}) zapret;
   # cfg = config.services.zapret;
-  svccfg = config.services.zapret;
-  cfg = config.zapret;
+  cfg = config.services.zapret;
+
+  # confFile = pkgs.writeTextFile {
+  #   name = "config";
+  #   text =  ''
+  #   '';
 in {
-  options.zapret = {
-    zapretconfig = mkOption {
-      type = types.str;
-      default = "tailscale0";
-      description = ''The interface name for tunnel traffic. Use "userspace-networking" (beta) to not use TUN.'';
-    };
-  };
   options.services.zapret = {
     enable = mkEnableOption ''zapret daemon'';
+    # zapretconfig = mkOption {
+    #   type = types.str;
+    #   default = "tailscale0";
+    #   description = ''The interface name for tunnel traffic. Use "userspace-networking" (beta) to not use TUN.'';
+    # };
   };
+
+
+          # ${zapret.out}/src/init.d/sysv/zapret stop
   # options = {
   #   zapret.enable = mkEnableOption ''zapret daemon'';
   # };
 
-  config = lib.mkIf svccfg.enable {
+  config = lib.mkIf cfg.enable {
     systemd.services.zapret = {
       description = "zapret daemon";
 
-      package = zapret.overrideAttrs (old: {
-        config = cfg.zapretconfig;
-      });
+      # package = zapret.overrideAttrs (old: {
+      #   config = cfg.zapretconfig;
+      # });
 
       after = ["network-online.target"];
       wants = ["network-online.target"];
