@@ -47,7 +47,7 @@ in {
         IgnoreSIGPIPE = "no";
         TimeoutSec = "30sec";
         # EnvironmentFile = "${pkgs.writeTextFile {cfg.zapretconfig}}";
-        EnvironmentFile = (pkgs.writeTextFile "zapretconfig" cfg.zapretconfig);
+        EnvironmentFile = builtins.toFile "zapretconfig" cfg.zapretconfig;
         ExecStart = ''
           ${zapret.out}/src/init.d/sysv/zapret start
         '';
