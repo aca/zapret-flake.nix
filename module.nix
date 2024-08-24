@@ -11,8 +11,11 @@ flake: {
   inherit (flake.packages.${pkgs.stdenv.hostPlatform.system}) zapret;
   cfg = config.services.zapret;
 in {
-  options.services.zapret = {
-    enable = mkEnableOption ''zapret daemon'';
+  # options.services.zapret = {
+  #   enable = mkEnableOption ''zapret daemon'';
+  # };
+  options = {
+    zapret.enable = mkEnableOption ''zapret daemon'';
   };
 
   config = lib.mkIf cfg.enable {
