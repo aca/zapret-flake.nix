@@ -30,7 +30,7 @@ in {
     systemd.services.zapret = {
       description = "zapret daemon";
 
-      path = with pkgs; [ nft curl iptables ];
+      path = with pkgs; [ nftables curl iptables ];
 
 
       # package = zapret.overrideAttrs (old: {
