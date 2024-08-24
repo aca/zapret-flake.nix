@@ -12,14 +12,14 @@ flake: {
   cfg = config.services.zapret;
 in {
   options.services.zapret = {
-    enable = mkEnableOption ''aapret daemon'';
-    config = mkOption {
-      type = types.str;
-      default = "";
-      description =
-        lib.mdDoc ''
-        '';
-    };
+    enable = mkEnableOption ''zapret daemon'';
+    # config = mkOption {
+    #   type = types.str;
+    #   default = "";
+    #   description =
+    #     lib.mdDoc ''
+    #     '';
+    # };
   };
 
   config = lib.mkIf cfg.enable {
@@ -31,9 +31,21 @@ in {
       wantedBy = ["multi-user.target"];
 
       serviceConfig = {
-        Type = "simple";
+        Type = "forking";
+        Restart = "no";
+        KillMode = "none";
+        GuessMainPID = "no";
+        RemainAfterExit = "no";
+        IgnoreSIGPIPE = "no";
+        TimeoutSec = "30sec";
         ExecStart = ''
-          sleep 1000
+          ${zapret.packages.x86_64-linux.default}/src/init.d/sysv/zapret start
+        '';
+        ExecStop = ''
+          ${zapret.packages.x86_64-linux.default}/src/init.d/sysv/zapret stop
+        '';
+        preStart = ''
+          cat ${zapret.packages.x86_64-linux.default}/src/config
         '';
       };
     };

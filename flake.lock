@@ -18,7 +18,24 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "zapretsrc": "zapretsrc"
+      }
+    },
+    "zapretsrc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1724482660,
+        "narHash": "sha256-f6OGjtTMqOA/ucCCU/Kx/QGxOmtdco+dmK2kS34nI4I=",
+        "owner": "bol-van",
+        "repo": "zapret",
+        "rev": "041e797c3e32cd9a3a33bfa8e7ff913b3db12629",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bol-van",
+        "repo": "zapret",
+        "type": "github"
       }
     }
   },
