@@ -11,9 +11,9 @@ flake: {
   inherit (flake.packages.${pkgs.stdenv.hostPlatform.system}) zapret;
   cfg = config.services.zapret;
 in {
-  # options.services.zapret = {
-  #   enable = mkEnableOption ''zapret daemon'';
-  # };
+  options.services.zapret = {
+    enable = mkEnableOption ''zapret daemon'';
+  };
   # options = {
   #   zapret.enable = mkEnableOption ''zapret daemon'';
   # };
@@ -22,9 +22,9 @@ in {
     systemd.services.zapret = {
       description = "zapret daemon";
 
-      package = zapret.overrideAttrs (old: {
-        config = ''new'';
-      });
+      # package = zapret.overrideAttrs (old: {
+      #   config = ''new'';
+      # });
 
       after = ["network-online.target"];
       wants = ["network-online.target"];
