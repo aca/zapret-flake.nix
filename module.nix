@@ -32,13 +32,13 @@ in {
         IgnoreSIGPIPE = "no";
         TimeoutSec = "30sec";
         ExecStart = ''
-          ${zapret.packages.x86_64-linux.default}/src/init.d/sysv/zapret start
+          ${zapret.src}/src/init.d/sysv/zapret start
         '';
         ExecStop = ''
-          ${zapret.packages.x86_64-linux.default}/src/init.d/sysv/zapret stop
+          ${zapret.src}/src/init.d/sysv/zapret stop
         '';
         preStart = ''
-          cat ${zapret.packages.x86_64-linux.default}/src/config
+          cat ${zapret.src}/src/config
         '';
       };
     };
